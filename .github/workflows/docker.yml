@@ -78,9 +78,9 @@ jobs:
         run: |
           ssh ${{ secrets.SSH_CON }} \
             "podman pull ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest \
-             && podman stop main-container || true \
-             && podman rm main-container || true \
+             && podman stop tasks || true \
+             && podman rm tasks || true \
              && podman run -d \
-                --name main-container \
+                --name tasks \
                 -p 8099:8000 \
                 ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest"
