@@ -83,5 +83,4 @@ jobs:
              && podman run -d \
                 --network host \
                 --name tasks \  
-                -p 8099:8000 \
                 ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest"
