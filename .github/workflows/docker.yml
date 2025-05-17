@@ -58,7 +58,6 @@ jobs:
         run: |
           docker run --rm \
             --network host \
-            -e DATABASE_URL=${{ secrets.DATABASE_URL}} \
             ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest \
             sh -c "while ! nc -z localhost 5432; do sleep 1; done && make test"
       - name: Cleanup
@@ -68,8 +67,6 @@ jobs:
 
   deploy:
     runs-on: self-hosted
-    env:
-      CONTAINER_NAME: app
     needs: [ test ]
     steps:
       - name: Set ssh key
@@ -85,7 +82,6 @@ jobs:
              && podman rm tasks || true \
              && podman run -d \
                 --network host \
-                --name tasks \
-                -e DATABASE_URL=${{ secrets.DATABASE_URL}} \
+                --name tasks \  
                 -p 8099:8000 \
                 ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest"
