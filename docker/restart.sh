@@ -4,11 +4,11 @@
 set -e
 
 # Name of the container
-CONTAINER_NAME="kubsu_runner"
+CONTAINER_NAME="main_container"
 
 # Pull the latest image
 echo "Pulling latest image..."
-podman pull technodamo/kubsu_docker:latest
+podman pull qqsnitch/admintask:latest
 
 # Stop and remove existing container if it exists
 if podman container exists "$CONTAINER_NAME"; then
@@ -23,6 +23,6 @@ podman run -d \
   --name "$CONTAINER_NAME" \
   --network host \
   --restart=always \
-  technodamo/kubsu_docker:latest
+  qqsnitch/admintask:latest
 
 echo "Container '$CONTAINER_NAME' is now running."
