@@ -58,14 +58,13 @@ jobs:
         run: |
           docker run --network host \
             -e TESTING=1 \
-            ${{ secrets.DOCKERHUB_USERNAME }}/kubsu_docker:latest pytest -v ./tests/
+            ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest pytest -v ./tests/
 
       - name: Push to docker registry
         if: success()
         run: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-          docker push technodamo/kubsu_docker:latest
-          echo "Would have pushed app:${{ github.sha }}"
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest
           
   deploy:
     runs-on: self-hosted
