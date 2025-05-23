@@ -67,6 +67,8 @@ jobs:
 
   deploy:
     runs-on: self-hosted
+    env:
+      CONTAINER_NAME: app
     needs: [ test ]
     steps:
       - name: Set ssh key
@@ -79,9 +81,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no \
           ${{ secrets.SSH_CON }} \
             "podman pull ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest \
-             && podman stop tasks || true \
-             && podman rm tasks || true \
+             && podman stop $CONTAINER_NAME || true \
+             && podman rm $CONTAINER_NAME || true \
              && podman run -d \
                 --network host \
-                --name tasks \  
+                --name $CONTAINER_NAME \  
                 ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest"
