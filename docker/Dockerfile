@@ -26,7 +26,6 @@ WORKDIR /app
 COPY --from=builder /install /usr/local
 
 # Copy application and test files from builder stage
-COPY --from=builder /app/conftest.py ./  
 COPY --from=builder /app/src ./src
 COPY --from=builder /app/tests ./tests  
 
@@ -37,7 +36,7 @@ ENV PYTHONPATH=/app
 USER fastapiuser
 
 # Expose port 8031 for the FastAPI app
-EXPOSE 8031
+EXPOSE 8099
 
 # Command to run the FastAPI app
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8031"]
