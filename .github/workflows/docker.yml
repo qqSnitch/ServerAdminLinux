@@ -61,17 +61,11 @@ jobs:
     runs-on: self-hosted
     needs: [ test ]
     steps:
-      - name: Set ssh key
-        uses: webfactory/ssh-agent@v0.9.0
+      - name: Execute ssh command via using private key
+        uses: appleboy/ssh-action@master
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Deploy to server
-        run: |
-          ssh ${{ secrets.SSH_CON }} \
-            "podman pull ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest \
-             && podman stop main-container || true \
-             && podman rm main-container || true \
-             && podman run -d \
-                --name main-container \
-                -p 8099:5432 \
-                ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest"
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: cd $HOME/tasks/docker && ./restart.sh
