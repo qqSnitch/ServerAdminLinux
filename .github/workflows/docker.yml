@@ -76,12 +76,12 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh ${{ secrets.SSH_CON }} \
+          ssh -o StrictHostKeyChecking=no \
+          ${{ secrets.SSH_CON }} \
             "podman pull ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest \
              && podman stop tasks || true \
              && podman rm tasks || true \
              && podman run -d \
                 --network host \
                 --name tasks \  
-                -p 8099:8000 \
                 ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest"
