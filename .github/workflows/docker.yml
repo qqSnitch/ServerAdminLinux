@@ -73,5 +73,5 @@ jobs:
              && podman rm main-container || true \
              && podman run -d \
                 --name main-container \
-                -p 8099:8000 \
+                -p 8099:5432 \
                 ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest"
