@@ -19,7 +19,7 @@ jobs:
     - name: Build Docker image
       run: | 
         docker build \
-        -t ${{ secrets.DOCKERHUB_USERNAME }}/admintaask:latest \
+        -t ${{ secrets.DOCKERHUB_USERNAME }}/admintask:latest \
         -f docker/Dockerfile \
         docker/
 
